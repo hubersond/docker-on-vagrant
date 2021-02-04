@@ -1,0 +1,17 @@
+# app directory but not it's content
+www/*
+!www/.gitkeep
+app/*
+!app/.gitkeep
+
+# box generated files
+Vagrantfile
+.vagrant
+log
+ubuntu-bionic-18.04-cloudimg-console.log
+ubuntu-xenial-16.04-cloudimg-console.log
+
+# dev files and directories
+*.code-workspace
+.vscode
+.tmp

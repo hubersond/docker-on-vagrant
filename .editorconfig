@@ -1,0 +1,11 @@
+# editorconfig.org
+root = true
+
+# 2 space indentation in all files
+[*]
+indent_style = space
+indent_size = 2
+
+# Unix-style newlines for web
+[*]
+end_of_line = lf
