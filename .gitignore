@@ -8,8 +8,7 @@ app/*
 Vagrantfile
 .vagrant
 log
-ubuntu-bionic-18.04-cloudimg-console.log
-ubuntu-xenial-16.04-cloudimg-console.log
+*-cloudimg-console.log
 
 # dev files and directories
 *.code-workspace
