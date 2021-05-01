@@ -2,10 +2,6 @@
 var/*
 !var/.gitkeep
 
-# environment configuration directory
-.config/*
-!.config/.gitkeep
-
 # vagrant generated files
 Vagrantfile
 .vagrant
