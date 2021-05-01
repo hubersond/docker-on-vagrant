@@ -1,16 +1,22 @@
-# app directory but not it's content
-www/*
-!www/.gitkeep
-app/*
-!app/.gitkeep
+# app directory
+var/*
+!var/.gitkeep
 
-# box generated files
+# environment configuration directory
+.config/*
+!.config/.gitkeep
+
+# vagrant generated files
 Vagrantfile
 .vagrant
 log
 *-cloudimg-console.log
 
-# dev files and directories
+# misc dev files and directories
 *.code-workspace
 .vscode
+.trash
+.stignore
+.stfolder
+.stversions
 .tmp
