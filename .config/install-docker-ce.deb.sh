@@ -41,7 +41,7 @@ sudo usermod -aG docker vagrant
 docker run hello-world
 
 # Enable remote access
-host_ip=$HOST_IP
+host_ip=$ENV_IP
 #
 ## Fixes issue that prevent dockerd to start after setting tcp 
 ##   listening in 'daemon.json'.

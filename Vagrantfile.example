@@ -8,7 +8,7 @@
 Vagrant.configure("2") do |config|
   # Change the IP to anything between the range of IP address you have
   # configured in virtualbox > Host Network Manager network adapter.
-  HOST_IP = "192.168.68.100"
+  ENV_IP = "192.168.56.100"
 
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
@@ -34,7 +34,7 @@ Vagrant.configure("2") do |config|
   
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: HOST_IP
+  config.vm.network "private_network", ip: ENV_IP
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -67,7 +67,8 @@ Vagrant.configure("2") do |config|
   # Example for VirtualBox:
   #
   config.vm.provider "virtualbox" do |vb|
-    vb.name = "my.new.app"
+    # The name of the vm as displayed in VirtualBox interface
+    vb.name = "myapp ~ env"
     # Customize the amount of memory on the VM:
     vb.memory = "1024"
     # Update default network interface card for security reason.
@@ -81,5 +82,5 @@ Vagrant.configure("2") do |config|
 
   # Enable provisioning with a shell script.
   # config.vm.provision "shell", path: ".config/after.sh"
-  config.vm.provision "shell", path: ".config/install-docker-ce.deb.sh", env: {"HOST_IP" => HOST_IP}
+  config.vm.provision "shell", path: ".config/install-docker-ce.deb.sh", env: {"ENV_IP" => ENV_IP}
 end
