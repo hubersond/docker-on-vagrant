@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Install docker engine with compose, and enable swarm mode on the configured
+# vagrant box IP -> `ENV_IP`.
+# 
 # check if docker-ce already installed and abort
 command -v docker >/dev/null 2>&1
 if [[ $? -eq 0 ]]; then
@@ -8,29 +11,37 @@ if [[ $? -eq 0 ]]; then
 fi
 
 # remove old docker version(docker.io)
+echo '==> Removing any previous docker installation...'
+
 sudo apt-get remove docker docker-engine docker.io containerd runc
 
 # update system and install dependencies 
+echo '==> Installing dependencies for docker repository...'
+
 sudo apt-get update
 sudo apt-get install -y \
-    apt-transport-https \
     ca-certificates \
     curl \
-    gnupg-agent \
-    software-properties-common
+    gnupg \
+    lsb-release
 
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo apt-key fingerprint 0EBFCD88
+# AddDocker’s official GPG key and repository
+echo '==> Adding docker repository to apt source list...'
 
-# Add repository and install docker
-sudo add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
-#
-sudo apt-get update && sudo apt-get -y install docker-ce docker-ce-cli containerd.io
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+echo "deb [arch=$(dpkg --print-architecture) \
+        signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+        $(lsb_release -cs) stable" \
+    | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+echo '==> Intalling docker engine with docker-cli & docker compose V2 ...'
+sudo apt-get update && sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
 # Test that it's up
 sudo docker run hello-world
+
 # Enable startup on boot
 sudo systemctl enable docker
 
@@ -70,4 +81,3 @@ docker swarm init --advertise-addr $host_ip
 if [[ $? -eq 0 ]]; then
     echo "Docker Up & Rolling"
 fi
-
